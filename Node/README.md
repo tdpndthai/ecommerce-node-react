@@ -1,5 +1,5 @@
 # ecommerce-node-react
 
 ```
-Node + ReactJs
+Node Server
 ```
