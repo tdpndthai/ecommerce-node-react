@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
-import { signin, authenticate } from "../auth/index";
+import { signin, authenticate, isAuthenticated } from "../auth/index";
 import { Redirect } from "react-router-dom";
 
 const Signin = () => {
   const [values, setValue] = useState({
-    email: "",
-    password: "",
+    email: "thai@gmail.com",
+    password: "1234567",
     error: "",
     loading: false,
     redirectToReferrer: false,
@@ -43,6 +43,7 @@ const Signin = () => {
   );
 
   const { email, password, error, loading, redirectToReferrer } = values;
+  const { user } = isAuthenticated();
 
   const clickSumit = (e) => {
     e.preventDefault();
@@ -82,6 +83,13 @@ const Signin = () => {
 
   const redirectToUser = () => {
     if (redirectToReferrer) {
+      if (user && user.role === 1) {
+        return <Redirect to="/admin/dashboard" />;
+      } else {
+        return <Redirect to="/user/dashboard" />;
+      }
+    }  
+    if (isAuthenticated()) {
       return <Redirect to="/" />;
     }
   };
